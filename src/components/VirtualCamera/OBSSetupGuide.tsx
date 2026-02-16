@@ -18,16 +18,16 @@ const steps: Step[] = [
   },
   {
     title: '2. Abra a Janela de Stream',
-    description: 'No Dice Virtual Cam, clique no botão 📡 Stream e depois em "Abrir Janela OBS". Uma janela limpa vai abrir mostrando apenas os dados 3D.',
+    description: 'No OmniDice, clique no botão 📡 Stream e depois em "Abrir Janela OBS". Uma janela limpa vai abrir mostrando apenas os dados 3D.',
     icon: '📡',
     detail: 'Essa janela mostra exatamente o que será transmitido — sem painéis, botões ou interface.',
     tip: 'Se o pop-up for bloqueado, permita pop-ups para localhost:3000 no navegador.',
   },
   {
     title: '3. Capture a Janela no OBS',
-    description: 'No OBS, clique em "+" em Fontes (Sources) → "Captura de Janela" (Window Capture) → Selecione a janela "Dice Virtual Cam - Stream".',
+    description: 'No OBS, clique em "+" em Fontes (Sources) → "Captura de Janela" (Window Capture) → Selecione a janela "OmniDice - Stream".',
     icon: '🎯',
-    detail: 'A janela do Dice Cam vai aparecer na lista de janelas disponíveis. Selecione-a e clique OK.',
+    detail: 'A janela do OmniDice vai aparecer na lista de janelas disponíveis. Selecione-a e clique OK.',
     tip: 'Ajuste o tamanho da fonte no OBS para preencher toda a área da cena.',
   },
   {

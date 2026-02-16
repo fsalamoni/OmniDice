@@ -131,7 +131,7 @@ export const VirtualCamera: React.FC = () => {
     // Open a clean popup window
     const popup = window.open(
       '',
-      'DiceVirtualCam',
+      'OmniDice',
       `width=${w},height=${h},menubar=no,toolbar=no,location=no,status=no,resizable=yes`
     );
 
@@ -145,7 +145,7 @@ export const VirtualCamera: React.FC = () => {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Dice Virtual Cam - Stream</title>
+        <title>OmniDice - Stream</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { background: #000; overflow: hidden; display: flex; align-items: center; justify-content: center; width: 100vw; height: 100vh; }
@@ -160,7 +160,7 @@ export const VirtualCamera: React.FC = () => {
       </head>
       <body>
         <video id="stream-video" autoplay muted playsinline></video>
-        <div class="watermark">Dice Virtual Cam</div>
+        <div class="watermark">OmniDice</div>
       </body>
       </html>
     `);

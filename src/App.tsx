@@ -38,10 +38,10 @@ function App() {
           fontFamily: 'system-ui',
         }}>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
-            🎲 Dice Virtual Cam
+            🎲 OmniDice
           </h1>
           <p style={{ fontSize: '0.7rem', margin: '0.2rem 0 0 0', opacity: 0.6 }}>
-            Professional 3D Dice Roller for RPG
+            Professional 3D Virtual Dice for RPG
           </p>
         </div>
 
