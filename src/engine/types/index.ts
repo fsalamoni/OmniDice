@@ -1,0 +1,10 @@
+export type { DiceVector3 } from "./DiceVector3";
+export type { DiceQuaternion } from "./DiceQuaternion";
+export type { DiceType } from "./DiceType";
+export type { DiceStyle } from "./DiceStyle";
+export type { PhysicalMaterial } from "./PhysicalMaterial";
+export type { WeightClass } from "./WeightClass";
+export type { DiceTransform } from "./DiceTransform";
+export type { DiceThrow } from "./DiceThrow";
+export { type Die, isDie } from "./Die";
+export { type Dice, isDice } from "./Dice";
