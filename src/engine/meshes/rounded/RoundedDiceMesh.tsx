@@ -9,6 +9,7 @@ import { D20 } from "./D20";
 import { D4 } from "./D4";
 import { D6 } from "./D6";
 import { D8 } from "./D8";
+import { DFudge } from "../fudge/DFudge";
 
 type Props = JSX.IntrinsicElements["group"] & { diceType: DiceType };
 
@@ -30,7 +31,7 @@ export const RoundedDiceMesh = React.forwardRef<THREE.Group, Props>(
       case "D100":
         return <D100 ref={ref} {...props} />;
       case "DFUDGE":
-        return <D6 ref={ref} {...props} />;
+        return <DFudge ref={ref} {...props} />;
       default:
         throw Error(`Dice type ${diceType} error: not implemented`);
     }

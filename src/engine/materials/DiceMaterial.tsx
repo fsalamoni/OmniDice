@@ -1,4 +1,6 @@
 import { DiceStyle } from "../types/DiceStyle";
+import { DiceType } from "../types/DiceType";
+import { FudgeMaterial } from "./fudge/FudgeMaterial";
 import { GalaxyMaterial } from "./galaxy/GalaxyMaterial";
 import { GemstoneMaterial } from "./gemstone/GemstoneMaterial";
 import { GlassMaterial } from "./glass/GlassMaterial";
@@ -8,7 +10,18 @@ import { SunriseMaterial } from "./sunrise/SunriseMaterial";
 import { SunsetMaterial } from "./sunset/SunsetMaterial";
 import { WalnutMaterial } from "./walnut/WalnutMaterial";
 
-export function DiceMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
+export function DiceMaterial({
+  diceStyle,
+  diceType,
+}: {
+  diceStyle: DiceStyle;
+  diceType?: DiceType;
+}) {
+  // Fudge dice always use their own dedicated material with +/−/blank symbols
+  if (diceType === "DFUDGE") {
+    return <FudgeMaterial />;
+  }
+
   switch (diceStyle) {
     case "GALAXY":
       return <GalaxyMaterial />;
