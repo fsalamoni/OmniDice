@@ -22,6 +22,8 @@ export function DiceCollider({ diceType }: { diceType: DiceType }) {
       return <D20Collider />;
     case "D100":
       return <D10Collider />;
+    case "DFUDGE":
+      return <D6Collider />;
     default:
       throw Error(`Dice type ${diceType} error: not implemented`);
   }

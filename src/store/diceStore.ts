@@ -42,12 +42,19 @@ interface DiceStore {
   onDieFinished: (id: string, value: number, transform: DiceTransform) => void;
 }
 
-function diceTypeToEngine(type: DiceType): "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100" {
-  return type.toUpperCase() as "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100";
+function diceTypeToEngine(type: DiceType): "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100" | "DFUDGE" {
+  return type.toUpperCase() as "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100" | "DFUDGE";
+}
+
+/** Convert raw D6 value (1-6) to Fudge value (-1, 0, +1) */
+function fudgeValue(raw: number): number {
+  if (raw <= 2) return -1;
+  if (raw <= 4) return 0;
+  return 1;
 }
 
 export const useDiceStore = create<DiceStore>((set, get) => ({
-  selectedDice: { d4: 0, d6: 0, d8: 0, d10: 0, d12: 0, d20: 2, d100: 0 },
+  selectedDice: { d4: 0, d6: 0, d8: 0, d10: 0, d12: 0, d20: 2, d100: 0, dfudge: 0 },
   modifier: 0,
   rollHistory: [],
   isRolling: false,
@@ -82,7 +89,13 @@ export const useDiceStore = create<DiceStore>((set, get) => ({
     const { selectedDice, modifier } = get();
     const parts: string[] = [];
     (Object.keys(selectedDice) as DiceType[]).forEach((type) => {
-      if (selectedDice[type] > 0) parts.push(selectedDice[type] + type);
+      if (selectedDice[type] > 0) {
+        if (type === 'dfudge') {
+          parts.push(selectedDice[type] + 'dF');
+        } else {
+          parts.push(selectedDice[type] + type);
+        }
+      }
     });
     if (parts.length === 0) return '0';
     let n = parts.join('+');
@@ -156,11 +169,15 @@ export const useDiceStore = create<DiceStore>((set, get) => ({
     if (Object.keys(newResults).length >= allDice.length) {
       // All dice finished! Calculate results
       const modifier = state.modifier;
-      const diceResults = allDice.map((die) => ({
-        id: die.id,
-        type: die.type.toLowerCase() as DiceType,
-        value: newResults[die.id] || 0,
-      }));
+      const diceResults = allDice.map((die) => {
+        const rawValue = newResults[die.id] || 0;
+        const isFudge = die.type === 'DFUDGE';
+        return {
+          id: die.id,
+          type: die.type.toLowerCase() as DiceType,
+          value: isFudge ? fudgeValue(rawValue) : rawValue,
+        };
+      });
 
       const diceTotal = diceResults.reduce((sum, r) => sum + r.value, 0);
       const total = diceTotal + modifier;

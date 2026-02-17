@@ -2,9 +2,12 @@ import React from 'react';
 import { useDiceStore } from '../../store/diceStore';
 import type { DiceType } from '../../types/dice.types';
 
-const diceTypes: DiceType[] = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100'];
+const diceTypes: DiceType[] = ['d4', 'd6', 'd8', 'd10', 'd12', 'd20', 'd100', 'dfudge'];
 const diceEmoji: Record<DiceType, string> = {
-  d4: '\u25B2', d6: '\u2B1B', d8: '\u25C6', d10: '\u2B1F', d12: '\u2B20', d20: '\u2B21', d100: '\uD83D\uDCAF'
+  d4: '\u25B2', d6: '\u2B1B', d8: '\u25C6', d10: '\u2B1F', d12: '\u2B20', d20: '\u2B21', d100: '\uD83D\uDCAF', dfudge: '\u00B1'
+};
+const diceLabels: Record<DiceType, string> = {
+  d4: 'D4', d6: 'D6', d8: 'D8', d10: 'D10', d12: 'D12', d20: 'D20', d100: 'D100', dfudge: 'Fudge'
 };
 
 export const ControlPanel: React.FC = () => {
@@ -93,7 +96,7 @@ export const ControlPanel: React.FC = () => {
         {diceTypes.map((type) => (
           <div key={type} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <span style={{ fontWeight: 600, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span>{diceEmoji[type]}</span> {type.toUpperCase()}
+              <span>{diceEmoji[type]}</span> {diceLabels[type]}
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               {diceBtn('-', () => decrementDice(type))}

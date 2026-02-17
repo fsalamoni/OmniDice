@@ -1,4 +1,4 @@
-export type DiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20' | 'd100';
+export type DiceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20' | 'd100' | 'dfudge';
 
 export interface DiceResult {
   id: string;
@@ -25,6 +25,7 @@ export interface DiceSelection {
   d12: number;
   d20: number;
   d100: number;
+  dfudge: number;
 }
 
 export interface ThemeConfig {

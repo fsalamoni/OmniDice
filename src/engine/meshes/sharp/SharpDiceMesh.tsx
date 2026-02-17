@@ -29,6 +29,8 @@ export const SharpDiceMesh = React.forwardRef<THREE.Group, Props>(
         return <D20 ref={ref} {...props} />;
       case "D100":
         return <D100 ref={ref} {...props} />;
+      case "DFUDGE":
+        return <D6 ref={ref} {...props} />;
       default:
         throw Error(`Dice type ${diceType} error: not implemented`);
     }

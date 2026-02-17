@@ -144,9 +144,14 @@ export const ResultsDisplay: React.FC = () => {
         opacity: 0.5,
         marginTop: '0.5rem',
       }}>
-        {last.results.map((r) => r.value).join(' + ')}
+        {last.results.map((r) => {
+          if (r.type === 'dfudge') {
+            return r.value === 1 ? '+' : r.value === -1 ? '−' : '▢';
+          }
+          return r.value;
+        }).join(' + ')}
         {last.modifier !== 0
-          ? (last.modifier > 0 ? ' + ' : ' - ') + Math.abs(last.modifier)
+          ? (last.modifier > 0 ? ' + ' : ' − ') + Math.abs(last.modifier)
           : ''}
       </div>
 
