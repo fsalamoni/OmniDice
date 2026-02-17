@@ -2,7 +2,7 @@ import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { gltfTexture } from "../../helpers/gltfTexture";
 import { DiceStyle } from "../../types/DiceStyle";
-import { useFudgeAlbedo } from "./useFudgeAlbedo";
+import { useFudgeTextures } from "./useFudgeTextures";
 
 // Import all style textures
 import galaxyAlbedo from "../galaxy/albedo.jpg";
@@ -53,7 +53,8 @@ const STYLE_TEXTURES: Record<
 
 /**
  * Fudge dice material that renders using the selected dice style
- * but with +, -, and blank symbols painted over the D6 face regions.
+ * but with +, -, and blank symbols replacing numbers on both
+ * the albedo (color) and normal (relief/bump) maps.
  */
 export function FudgeMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
   const texturePaths = STYLE_TEXTURES[diceStyle];
@@ -63,10 +64,10 @@ export function FudgeMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
     (textures) => gltfTexture(textures, ["SRGB", "LINEAR", "LINEAR"])
   );
 
-  // Paint fudge symbols over the albedo
-  const fudgeAlbedo = useFudgeAlbedo(albedoMap);
+  // Paint fudge symbols over both albedo AND normal map
+  const { fudgeAlbedo, fudgeNormal } = useFudgeTextures(albedoMap, normalMap);
 
-  // Render with style-specific properties
+  // Render with style-specific properties (identical to each style's own material)
   switch (diceStyle) {
     case "GALAXY":
       return (
@@ -75,7 +76,7 @@ export function FudgeMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
           aoMap={ormMap}
           metalnessMap={ormMap}
           roughnessMap={ormMap}
-          normalMap={normalMap}
+          normalMap={fudgeNormal}
           clearcoat={1}
           clearcoatRoughness={0.3}
         />
@@ -86,7 +87,7 @@ export function FudgeMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
           map={fudgeAlbedo}
           sheen={1}
           sheenColor={new THREE.Color("#4abff4")}
-          normalMap={normalMap}
+          normalMap={fudgeNormal}
           roughness={0.3}
           metalness={0}
           transmission={1}
@@ -104,7 +105,7 @@ export function FudgeMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
           aoMap={ormMap}
           roughnessMap={ormMap}
           metalnessMap={ormMap}
-          normalMap={normalMap}
+          normalMap={fudgeNormal}
           metalness={1}
         />
       );
@@ -116,7 +117,7 @@ export function FudgeMaterial({ diceStyle }: { diceStyle: DiceStyle }) {
           aoMap={ormMap}
           roughnessMap={ormMap}
           metalnessMap={ormMap}
-          normalMap={normalMap}
+          normalMap={fudgeNormal}
         />
       );
   }
