@@ -17,9 +17,9 @@ export function DiceMaterial({
   diceStyle: DiceStyle;
   diceType?: DiceType;
 }) {
-  // Fudge dice always use their own dedicated material with +/−/blank symbols
+  // Fudge dice use the selected style's material but with +/−/blank symbols
   if (diceType === "DFUDGE") {
-    return <FudgeMaterial />;
+    return <FudgeMaterial diceStyle={diceStyle} />;
   }
 
   switch (diceStyle) {
