@@ -54,7 +54,7 @@ function fudgeValue(raw: number): number {
 }
 
 export const useDiceStore = create<DiceStore>((set, get) => ({
-  selectedDice: { d4: 0, d6: 0, d8: 0, d10: 0, d12: 0, d20: 2, d100: 0, dfudge: 0 },
+  selectedDice: { d4: 0, d6: 0, d8: 0, d10: 0, d12: 0, d20: 0, d100: 0, dfudge: 0 },
   modifier: 0,
   rollHistory: [],
   isRolling: false,
@@ -67,7 +67,7 @@ export const useDiceStore = create<DiceStore>((set, get) => ({
   finishedTransforms: null,
   rollKey: 0,
 
-  currentStyle: 'GALAXY',
+  currentStyle: 'DIVINE_GOLD',
   setStyle: (style) => set({ currentStyle: style }),
 
   setDiceCount: (type, count) => set((state) => ({

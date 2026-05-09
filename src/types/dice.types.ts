@@ -62,13 +62,5 @@ export interface ThemeConfig {
 
 export type DiceMaterial = 'default' | 'chrome' | 'bronze' | 'gold' | 'crystal' | 'bone' | 'obsidian' | 'runic';
 
-// Engine dice style (PBR texture-based skins from owlbear)
-export type DiceStyleType =
-  | "GALAXY"
-  | "GEMSTONE"
-  | "GLASS"
-  | "IRON"
-  | "NEBULA"
-  | "SUNRISE"
-  | "SUNSET"
-  | "WALNUT";
+// Legacy alias — actual type is in engine/types/DiceStyle.ts
+export type { DiceStyle as DiceStyleType } from '../engine/types/DiceStyle';

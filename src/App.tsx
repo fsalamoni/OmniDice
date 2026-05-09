@@ -4,6 +4,7 @@ import { ControlPanel } from './components/ControlPanel/ControlPanel';
 import { ResultsDisplay } from './components/ResultsDisplay/ResultsDisplay';
 import { ThemeSelector } from './components/ThemeSelector/ThemeSelector';
 import { MaterialSelector } from './components/MaterialSelector/MaterialSelector';
+import { CustomSkinCreator } from './components/CustomSkinCreator/CustomSkinCreator';
 import { RollHistory } from './components/RollHistory/RollHistory';
 import { VirtualCamera } from './components/VirtualCamera/VirtualCamera';
 import { useCameraStore } from './store/cameraStore';
@@ -54,6 +55,9 @@ function App() {
         {/* Bottom bar: Theme + Material selectors */}
         <ThemeSelector />
         <MaterialSelector />
+
+        {/* Custom Skin Creator panel */}
+        <CustomSkinCreator />
       </div>
     </div>
   );
