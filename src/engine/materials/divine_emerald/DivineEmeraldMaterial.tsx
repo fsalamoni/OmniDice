@@ -1,21 +1,13 @@
-import { useTexture } from "@react-three/drei";
-
-import albedo from "./albedo.png";
-import normal from "./normal.png";
-import { gltfTexture } from "../../helpers/gltfTexture";
+import diffuse from "./diffuse.png";
+import { DivineLayeredMaterial } from "../divine/DivineLayeredMaterial";
 
 export function DivineEmeraldMaterial(
   props: JSX.IntrinsicElements["meshPhysicalMaterial"]
 ) {
-  const [albedoMap, normalMap] = useTexture(
-    [albedo, normal],
-    (textures) => gltfTexture(textures, ["SRGB", "LINEAR"])
-  );
-
   return (
-    <meshPhysicalMaterial
-      map={albedoMap}
-      normalMap={normalMap}
+    <DivineLayeredMaterial
+      backgroundTexture={diffuse}
+      numberColor="#2ecc71"
       roughness={0.3}
       metalness={0.2}
       clearcoat={0.9}

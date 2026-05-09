@@ -1,12 +1,6 @@
-import * as THREE from "three";
 import { useMemo } from "react";
-import { useTexture } from "@react-three/drei";
 import { useCustomSkinStore, CustomSkinType } from "../../../store/customSkinStore";
-import { gltfTexture } from "../../helpers/gltfTexture";
-
-// Same numbers template used by ColorMaterial
-import numbersTemplate from "../color/numbers_template.jpg";
-import normalTex from "../color/normal.jpg";
+import { DivineLayeredMaterial } from "../divine/DivineLayeredMaterial";
 
 /**
  * Get PBR properties based on the custom skin type
@@ -63,24 +57,13 @@ export function CustomMaterial(
 ) {
   const config = useCustomSkinStore((s) => s.config);
   const typeProps = useMemo(() => getTypeProperties(config.type), [config.type]);
-  const color = useMemo(() => new THREE.Color(config.baseColor), [config.baseColor]);
-
-  const emissiveColor = useMemo(() => {
-    if (config.type === "neon") return new THREE.Color(config.baseColor);
-    return undefined;
-  }, [config.type, config.baseColor]);
-
-  // Always load the numbers template + normal map
-  const [albedoMap, normalMap] = useTexture(
-    [numbersTemplate, normalTex],
-    (textures) => gltfTexture(textures, ["SRGB", "LINEAR"])
-  );
+  const emissiveColor = config.type === "neon" ? config.baseColor : undefined;
 
   return (
-    <meshPhysicalMaterial
-      map={albedoMap}
-      normalMap={normalMap}
-      color={color}
+    <DivineLayeredMaterial
+      backgroundTexture={config.backgroundImage}
+      backgroundColor={config.baseColor}
+      numberColor={config.numberColor}
       roughness={typeProps.roughness}
       metalness={typeProps.metalness}
       clearcoat={typeProps.clearcoat}

@@ -1,21 +1,13 @@
-import { useTexture } from "@react-three/drei";
-
-import albedo from "./albedo.png";
-import normal from "./normal.png";
-import { gltfTexture } from "../../helpers/gltfTexture";
+import diffuse from "./diffuse.png";
+import { DivineLayeredMaterial } from "../divine/DivineLayeredMaterial";
 
 export function DivineSapphireMaterial(
   props: JSX.IntrinsicElements["meshPhysicalMaterial"]
 ) {
-  const [albedoMap, normalMap] = useTexture(
-    [albedo, normal],
-    (textures) => gltfTexture(textures, ["SRGB", "LINEAR"])
-  );
-
   return (
-    <meshPhysicalMaterial
-      map={albedoMap}
-      normalMap={normalMap}
+    <DivineLayeredMaterial
+      backgroundTexture={diffuse}
+      numberColor="#1e3a8a"
       roughness={0.25}
       metalness={0.2}
       clearcoat={0.9}

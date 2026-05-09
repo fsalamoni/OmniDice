@@ -1,25 +1,23 @@
-import { useTexture } from "@react-three/drei";
-
-import albedo from "./albedo.png";
-import normal from "./normal.png";
-import { gltfTexture } from "../../helpers/gltfTexture";
+import diffuse from "./diffuse.png";
+import { DivineLayeredMaterial } from "../divine/DivineLayeredMaterial";
 
 export function DivineGoldMaterial(
   props: JSX.IntrinsicElements["meshPhysicalMaterial"]
 ) {
-  const [albedoMap, normalMap] = useTexture(
-    [albedo, normal],
-    (textures) => gltfTexture(textures, ["SRGB", "LINEAR"])
-  );
-
   return (
-    <meshPhysicalMaterial
-      map={albedoMap}
-      normalMap={normalMap}
-      roughness={0.2}
-      metalness={0.8}
-      clearcoat={1.0}
-      clearcoatRoughness={0.1}
+    <DivineLayeredMaterial
+      backgroundTexture={diffuse}
+      numberColor="#651408"
+      roughness={0.38}
+      metalness={0.72}
+      clearcoat={0.3}
+      clearcoatRoughness={0.42}
+      envMapIntensity={0.82}
+      numberDepth={2.25}
+      numberRoughnessBoost={0.26}
+      numberMetalnessFade={0.18}
+      numberOcclusionStrength={0.4}
+      numberClearcoatStrength={0.88}
       {...props}
     />
   );

@@ -1,12 +1,6 @@
 import * as THREE from "three";
-import { useMemo } from "react";
-import { useTexture } from "@react-three/drei";
-import { gltfTexture } from "../../helpers/gltfTexture";
 
-// Number template: Iron's albedo has dark numbers on a neutral grey background.
-// When multiplied with `color`, the grey becomes the tinted color and numbers stay dark.
-import numbersTemplate from "./numbers_template.jpg";
-import normalMap from "./normal.jpg";
+import { DivineLayeredMaterial } from "../divine/DivineLayeredMaterial";
 
 /**
  * Configuration for a color-based dice material.
@@ -14,6 +8,7 @@ import normalMap from "./normal.jpg";
  */
 export interface ColorMaterialConfig {
   color: string;
+  numberColor?: string;
   roughness: number;
   metalness: number;
   clearcoat?: number;
@@ -121,38 +116,42 @@ interface ColorMaterialProps {
   config: ColorMaterialConfig;
 }
 
+function getContrastNumberColor(backgroundColor: string) {
+  const color = new THREE.Color(backgroundColor);
+  const toLinear = (channel: number) => {
+    if (channel <= 0.04045) {
+      return channel / 12.92;
+    }
+
+    return Math.pow((channel + 0.055) / 1.055, 2.4);
+  };
+
+  const luminance =
+    toLinear(color.r) * 0.2126 +
+    toLinear(color.g) * 0.7152 +
+    toLinear(color.b) * 0.0722;
+
+  return luminance > 0.42 ? "#1b140f" : "#f6f1e8";
+}
+
 export function ColorMaterial({
   config,
   ...props
 }: ColorMaterialProps & Omit<JSX.IntrinsicElements["meshPhysicalMaterial"], "color">) {
-  const [albedoMap, normalTex] = useTexture(
-    [numbersTemplate, normalMap],
-    (textures) => gltfTexture(textures, ["SRGB", "LINEAR"])
-  );
-
-  const color = useMemo(() => new THREE.Color(config.color), [config.color]);
-  const emissiveColor = useMemo(
-    () => (config.emissive ? new THREE.Color(config.emissive) : undefined),
-    [config.emissive]
-  );
-  const sheenCol = useMemo(
-    () => (config.sheenColor ? new THREE.Color(config.sheenColor) : undefined),
-    [config.sheenColor]
-  );
+  const numberColor = config.numberColor ?? getContrastNumberColor(config.color);
 
   return (
-    <meshPhysicalMaterial
-      map={albedoMap}
-      normalMap={normalTex}
-      color={color}
+    <DivineLayeredMaterial
+      backgroundColor={config.color}
+      numberColor={numberColor}
       roughness={config.roughness}
       metalness={config.metalness}
       clearcoat={config.clearcoat ?? 0}
       clearcoatRoughness={config.clearcoatRoughness ?? 0}
-      emissive={emissiveColor}
+      emissive={config.emissive}
       emissiveIntensity={config.emissiveIntensity ?? 0}
       sheen={config.sheen ?? 0}
-      sheenColor={sheenCol}
+      sheenColor={config.sheenColor}
       envMapIntensity={config.envMapIntensity ?? 1}
       {...props}
     />
